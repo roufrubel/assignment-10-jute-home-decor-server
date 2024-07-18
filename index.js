@@ -3,23 +3,30 @@ const cors = require('cors');
 require('dotenv').config();
 const app = express();
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3000;
 
 // middleware
-const corsOptions = {
-  origin: "*",
-  optionsSuccessStatus: 200,
-};
-app.use(cors(corsOptions));
+// const corsOptions = {
+//   origin: "*",
+//   optionsSuccessStatus: 200,
+// };
+app.use(cors({
+  origin: [
+    "http://localhost:5174",
+    "https://assign-10-jute-decor-client.web.app",
+    "https://assign-10-jute-decor-client.firebaseapp.com",
+  ],
+  credentials: true,
+}));
 app.use(express.json()); // Middleware to enable CORS
-app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", 
-      "https://assign-10-jute-decor-client.web.app");
-     // Replace with your client's origin
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-    next();
-});
+// app.use((req, res, next) => {
+//     res.header("Access-Control-Allow-Origin", 
+//       "https://assign-10-jute-decor-client.web.app");
+//      // Replace with your client's origin
+//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+//     next();
+// });
 
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.tjqypvp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
